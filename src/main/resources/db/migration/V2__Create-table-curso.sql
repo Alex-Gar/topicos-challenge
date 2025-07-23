@@ -1,0 +1,6 @@
+CREATE TABLE
+    IF NOT EXISTS curso (
+        id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        nombre VARCHAR(100) NOT NULL,
+        categoria VARCHAR(255) NOT NULL
+    );
