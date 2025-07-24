@@ -3,7 +3,7 @@ package com.topicos.topicos.models.entities;
 import java.util.List;
 
 import com.topicos.topicos.models.dtos.Categoria;
-import com.topicos.topicos.models.dtos.CursoDto;
+import com.topicos.topicos.models.dtos.CursoRequestDto;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -40,13 +40,15 @@ public class Curso {
         this.topicos = topicos;
     }
 
-    public Curso(CursoDto cursoDto) {
-        this.id = cursoDto.id();
+    public Curso(CursoRequestDto cursoDto) {
         this.nombre = cursoDto.nombre();
         this.categoria = cursoDto.categoria();
-        this.topicos = cursoDto.topicos().stream()
-                .map(Topico::new)
-                .toList();
+    }
+
+    public void actualizarCurso(CursoRequestDto cursoDto) {
+        if(cursoDto.nombre() != null){
+            this.nombre = cursoDto.nombre();
+        }
     }
 
     public Long getId() {

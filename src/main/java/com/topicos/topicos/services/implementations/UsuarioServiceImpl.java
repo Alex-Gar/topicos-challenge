@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.topicos.topicos.exceptions.ResourceNotFoundException;
-import com.topicos.topicos.models.dtos.TopicoDto;
-import com.topicos.topicos.models.dtos.UsuarioDto;
+import com.topicos.topicos.models.dtos.UsuarioRequestDto;
+import com.topicos.topicos.models.dtos.UsuarioResponseDto;
 import com.topicos.topicos.models.entities.Usuario;
 import com.topicos.topicos.models.payload.ApiResponse;
 import com.topicos.topicos.models.repositories.UsuarioRepository;
@@ -18,37 +18,25 @@ import com.topicos.topicos.services.UsuarioService;
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
 
-    private final FuncionesGenericasServiceImpl funcionesGenericasServiceImpl;
-
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    UsuarioServiceImpl(FuncionesGenericasServiceImpl funcionesGenericasServiceImpl) {
-        this.funcionesGenericasServiceImpl = funcionesGenericasServiceImpl;
-    }
+    @Autowired
+    private FuncionesGenericasService funcionGenericaService;
 
     @Override
     @Transactional
-    public ApiResponse guardarUsuario(UsuarioDto usuarioDto) {
+    public ApiResponse guardarUsuario(UsuarioRequestDto usuarioDto) {
         Usuario usuario = this.usuarioRepository.save(new Usuario(usuarioDto));
-
-        UsuarioDto usuarioCreado = new UsuarioDto(usuario);
+        UsuarioResponseDto usuarioCreado = new UsuarioResponseDto(usuario);
         return new ApiResponse("Usuario guardado correctamente", true, usuarioCreado);
     }
 
     @Override
     @Transactional(readOnly = true)
     public ApiResponse listarUsuarios(Pageable pageable) {
-
-        Page<UsuarioDto> listaUsuarios = this.usuarioRepository.findAll(pageable)
-                .map(usuario -> new UsuarioDto(
-                        usuario.getId(),
-                        usuario.getNombre(),
-                        usuario.getEmail(),
-                        usuario.getPassword(),
-                        usuario.getTopicos().stream()
-                                .map(TopicoDto::new)
-                                .toList()));
+        Page<UsuarioResponseDto> listaUsuarios = this.usuarioRepository.findAll(pageable)
+                .map(usuario -> new UsuarioResponseDto(usuario));
 
         if (listaUsuarios.isEmpty()) {
             throw new ResourceNotFoundException("Usuarios");
@@ -59,10 +47,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     @Transactional(readOnly = true)
     public ApiResponse obtenerUsusarioPorId(Long id) {
-        FuncionesGenericasService funcionGenericaService = new FuncionesGenericasServiceImpl();
-        funcionGenericaService.existeId(id, this.usuarioRepository, "Usuario");
-
-        UsuarioDto usuarioDto = this.usuarioRepository.findById(id).map(u -> new UsuarioDto(u))
+        UsuarioResponseDto usuarioDto = this.usuarioRepository.findById(id).map(u -> new UsuarioResponseDto(u))
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario", "id", id));
 
         ApiResponse response = new ApiResponse("Usuario buscado correctamente", true, usuarioDto);
@@ -72,23 +57,20 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     @Transactional
     public ApiResponse eliminarUsusario(Long id) {
-        FuncionesGenericasService funcionGenericaService = new FuncionesGenericasServiceImpl();
         funcionGenericaService.existeId(id, this.usuarioRepository, "Usuario");
         usuarioRepository.deleteById(id);
-
         return new ApiResponse("Usuario eliminado correctamente", true, null);
     }
 
     @Override
     @Transactional
-    public ApiResponse actualizarUsusario(Long id, UsuarioDto usuarioDto) {
-        FuncionesGenericasService funcionGenericaService = new FuncionesGenericasServiceImpl();
+    public ApiResponse actualizarUsusario(Long id, UsuarioRequestDto usuarioDto) {
+        funcionGenericaService.existeId(id, this.usuarioRepository, "Usuario");
         Usuario usuario = funcionGenericaService.referenciaPorId(id, this.usuarioRepository, "usuario");
         usuario.actualizarDatos(usuarioDto);
+        UsuarioResponseDto usuarioDtoActualizado = new UsuarioResponseDto(usuario);
 
-        UsuarioDto usuarioDtoActualizado = new UsuarioDto(usuario);
-        ApiResponse response = new ApiResponse("Usuario actualizado correctamente", true, usuarioDtoActualizado);
-        return response;
+        return new ApiResponse("Usuario actualizado correctamente", true, usuarioDtoActualizado);
     }
 
 }

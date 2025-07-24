@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.topicos.topicos.models.dtos.UsuarioDto;
+import com.topicos.topicos.models.dtos.UsuarioRequestDto;
+import com.topicos.topicos.models.dtos.UsuarioResponseDto;
 import com.topicos.topicos.models.payload.ApiResponse;
 import com.topicos.topicos.services.UsuarioService;
 
@@ -28,10 +29,8 @@ public class UsuariosController {
     private UsuarioService usuarioService;
 
     @PostMapping
-    public ResponseEntity<ApiResponse> guardarUsuario(@RequestBody @Valid UsuarioDto usuarioDto) {
-        System.out.println("Usuario guardado: " + usuarioDto);
+    public ResponseEntity<ApiResponse> guardarUsuario(@RequestBody @Valid UsuarioRequestDto usuarioDto) {
         ApiResponse response = this.usuarioService.guardarUsuario(usuarioDto);
-
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
@@ -56,7 +55,8 @@ public class UsuariosController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse> actualizarUsuario(@PathVariable Long id,
-            @RequestBody @Valid UsuarioDto usuarioDto) {
+            @RequestBody @Valid UsuarioRequestDto usuarioDto) {
+                
         ApiResponse response = this.usuarioService.actualizarUsusario(id, usuarioDto);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

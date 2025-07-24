@@ -3,7 +3,7 @@ package com.topicos.topicos.models.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.topicos.topicos.models.dtos.UsuarioDto;
+import com.topicos.topicos.models.dtos.UsuarioRequestDto;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,14 +32,14 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(UsuarioDto usuarioDto) {
+    public Usuario(UsuarioRequestDto usuarioDto) {
         this.id = usuarioDto.id();
         this.nombre = usuarioDto.nombre();
         this.email = usuarioDto.email();
         this.password = usuarioDto.password();
     }
 
-    public void actualizarDatos(UsuarioDto usuarioDto) {
+    public void actualizarDatos(UsuarioRequestDto usuarioDto) {
         if (usuarioDto.nombre() != null) {
             this.nombre = usuarioDto.nombre();
         }
@@ -49,9 +49,6 @@ public class Usuario {
         if (usuarioDto.password() != null) {
             this.password = usuarioDto.password();
         }
-        this.topicos = usuarioDto.topicos().stream()
-                .map(Topico::new)
-                .toList();
     }
 
     public Long getId() {

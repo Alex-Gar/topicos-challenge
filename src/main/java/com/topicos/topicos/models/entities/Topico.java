@@ -2,8 +2,10 @@ package com.topicos.topicos.models.entities;
 
 import java.time.LocalDateTime;
 
-import com.topicos.topicos.models.dtos.TopicoDto;
+import com.topicos.topicos.models.dtos.TopicoRequestDto;
+import com.topicos.topicos.models.dtos.TopicoResponseDto;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,7 +25,9 @@ public class Topico {
     private String titulo;
     private String mensaje;
     private LocalDateTime fechaCreacion;
+
     private Boolean status;
+
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
@@ -35,9 +39,8 @@ public class Topico {
     public Topico() {
     }
 
-    public Topico(Long id, String titulo, String mensaje, LocalDateTime fechaCreacion, Boolean activo, Usuario usuario,
+    public Topico(String titulo, String mensaje, LocalDateTime fechaCreacion, Boolean status, Usuario usuario,
             Curso curso) {
-        this.id = id;
         this.titulo = titulo;
         this.mensaje = mensaje;
         this.fechaCreacion = fechaCreacion;
@@ -46,14 +49,22 @@ public class Topico {
         this.curso = curso;
     }
 
-    public Topico(TopicoDto topicoDto) {
-        this.id = topicoDto.id();
+    public Topico(TopicoRequestDto topicoDto) {
         this.titulo = topicoDto.titulo();
         this.mensaje = topicoDto.mensaje();
         this.fechaCreacion = topicoDto.fechaCreacion();
         this.status = topicoDto.status();
-        this.usuario = topicoDto.usuario() != null ? new Usuario(topicoDto.usuario()) : null;
-        this.curso = topicoDto.curso() != null ? new Curso(topicoDto.curso()) : null;
+        this.usuario = topicoDto.usuarioId() != null ? new Usuario() : null;
+        this.curso = topicoDto.cursoId() != null ? new Curso() : null;
+    }
+
+    public void validaciones(TopicoRequestDto topico) {
+        if (topico.titulo() != null) {
+            this.titulo = topico.titulo();
+        }
+        if (topico.mensaje() != null) {
+            this.mensaje = topico.mensaje();
+        }
     }
 
     public Long getId() {

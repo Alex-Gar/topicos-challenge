@@ -1,19 +1,20 @@
 package com.topicos.topicos.services;
 
-import java.util.List;
-import org.springframework.data.domain.Page;
-import com.topicos.topicos.models.dtos.CursoDto;
+import org.springframework.data.domain.Pageable;
+
+import com.topicos.topicos.models.dtos.CursoRequestDto;
+import com.topicos.topicos.models.payload.ApiResponse;
 
 public interface CursoService {
 
-    CursoDto guardarCurso(CursoDto cursoDto);
+    ApiResponse guardarCurso(CursoRequestDto cursoDto);
 
-    List<Page<CursoDto>> listarCursos();
+    ApiResponse listarCursos(Pageable pageable);
 
-    CursoDto obtenerCursoPorId(Long id);
+    ApiResponse obtenerCursoPorId(Long id);
 
-    void eliminarCurso(Long id);
+    ApiResponse eliminarCurso(Long id);
 
-    CursoDto actualizarCurso(Long id, CursoDto cursoDto);
+    ApiResponse actualizarCurso(Long id, CursoRequestDto cursoDto);
 
 }
