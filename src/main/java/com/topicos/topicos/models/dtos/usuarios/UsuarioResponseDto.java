@@ -26,11 +26,11 @@ public record UsuarioResponseDto(
                                                                                 u.getTitulo(),
                                                                                 u.getMensaje(),
                                                                                 new UsuarioInternalDto(
-                                                                                                u.getId(),
+                                                                                                u.getUsuario().getId(),
                                                                                                 u.getUsuario().getNombre(),
                                                                                                 u.getUsuario().getEmail()),
                                                                                 new CursoRequestDto(
-                                                                                                u.getId(),
+                                                                                                u.getCurso().getId(),
                                                                                                 u.getCurso().getNombre(),
                                                                                                 u.getCurso().getCategoria())))
                                                                 .toList());

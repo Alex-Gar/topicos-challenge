@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.topicos.topicos.exceptions.ResourceNotFoundException;
+import com.topicos.topicos.models.dtos.usuarios.UsuarioIntenal2Dto;
 import com.topicos.topicos.models.dtos.usuarios.UsuarioRequestDto;
 import com.topicos.topicos.models.dtos.usuarios.UsuarioResponseDto;
 import com.topicos.topicos.models.entities.Usuario;
@@ -32,23 +33,11 @@ public class UsuarioServiceImpl implements UsuarioService {
         return new ApiResponse("Usuario guardado correctamente", true, usuarioCreado);
     }
 
-    // @Override
-    // @Transactional(readOnly = true)
-    // public ApiResponse listarUsuarios(Pageable pageable) {
-    //     Page<UsuarioResponseDto> listaUsuarios = this.usuarioRepository.findAll(pageable)
-    //             .map(usuario -> new UsuarioResponseDto(usuario));
-
-    //     if (listaUsuarios.isEmpty()) {
-    //         throw new ResourceNotFoundException("Usuarios");
-    //     }
-    //     return new ApiResponse("Usuarios listados correctamente", true, listaUsuarios);
-    // }
-
     @Override
     @Transactional(readOnly = true)
     public ApiResponse listarUsuarios(Pageable pageable) {
-        Page<UsuarioResponseDto> listaUsuarios = this.usuarioRepository.findAll(pageable)
-                .map(usuario -> new UsuarioResponseDto(usuario));
+        Page<UsuarioIntenal2Dto> listaUsuarios = this.usuarioRepository.findAll(pageable)
+                .map(usuario -> new UsuarioIntenal2Dto(usuario));
 
         if (listaUsuarios.isEmpty()) {
             throw new ResourceNotFoundException("Usuarios");
@@ -59,7 +48,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     @Transactional(readOnly = true)
     public ApiResponse obtenerUsusarioPorId(Long id) {
-        UsuarioResponseDto usuarioDto = this.usuarioRepository.findById(id).map(u -> new UsuarioResponseDto(u))
+        UsuarioIntenal2Dto usuarioDto = this.usuarioRepository.findById(id).map(u -> new UsuarioIntenal2Dto(u))
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario", "id", id));
 
         ApiResponse response = new ApiResponse("Usuario buscado correctamente", true, usuarioDto);
