@@ -2,7 +2,7 @@ package com.topicos.topicos.services;
 
 import org.springframework.data.domain.Pageable;
 
-import com.topicos.topicos.models.dtos.CursoRequestDto;
+import com.topicos.topicos.models.dtos.cursos.CursoRequestDto;
 import com.topicos.topicos.models.payload.ApiResponse;
 
 public interface CursoService {

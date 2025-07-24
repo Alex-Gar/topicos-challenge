@@ -1,4 +1,4 @@
-package com.topicos.topicos.models.dtos;
+package com.topicos.topicos.models.dtos.usuarios;
 
 import com.topicos.topicos.models.entities.Usuario;
 

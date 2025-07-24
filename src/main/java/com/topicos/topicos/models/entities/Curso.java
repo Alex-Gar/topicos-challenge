@@ -3,7 +3,7 @@ package com.topicos.topicos.models.entities;
 import java.util.List;
 
 import com.topicos.topicos.models.dtos.Categoria;
-import com.topicos.topicos.models.dtos.CursoRequestDto;
+import com.topicos.topicos.models.dtos.cursos.CursoRequestDto;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

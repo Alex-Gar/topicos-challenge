@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.topicos.topicos.exceptions.ResourceNotFoundException;
-import com.topicos.topicos.models.dtos.UsuarioRequestDto;
-import com.topicos.topicos.models.dtos.UsuarioResponseDto;
+import com.topicos.topicos.models.dtos.usuarios.UsuarioRequestDto;
+import com.topicos.topicos.models.dtos.usuarios.UsuarioResponseDto;
 import com.topicos.topicos.models.entities.Usuario;
 import com.topicos.topicos.models.payload.ApiResponse;
 import com.topicos.topicos.models.repositories.UsuarioRepository;

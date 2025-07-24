@@ -1,7 +1,9 @@
-package com.topicos.topicos.models.dtos;
+package com.topicos.topicos.models.dtos.cursos;
 
 import java.util.List;
 
+import com.topicos.topicos.models.dtos.Categoria;
+import com.topicos.topicos.models.dtos.topicos.TopicoResponseDto;
 import com.topicos.topicos.models.entities.Curso;
 
 import jakarta.validation.constraints.NotBlank;

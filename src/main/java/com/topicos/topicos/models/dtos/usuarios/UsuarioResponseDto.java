@@ -1,15 +1,15 @@
-package com.topicos.topicos.models.dtos;
+package com.topicos.topicos.models.dtos.usuarios;
 
 import java.util.List;
+
+import com.topicos.topicos.models.dtos.topicos.TopicoResponseDto;
 import com.topicos.topicos.models.entities.Usuario;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 
 public record UsuarioResponseDto(
                 Long id,
                 String nombre,
-                @Email String email,
-                @NotBlank String password,
+                String email,
+                String password,
                 List<TopicoResponseDto> topicos) {
 
         public UsuarioResponseDto(Usuario usuario) {

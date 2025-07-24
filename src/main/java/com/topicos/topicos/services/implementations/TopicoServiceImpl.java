@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.topicos.topicos.exceptions.ResourceNotFoundException;
-import com.topicos.topicos.models.dtos.CursoRequestDto;
-import com.topicos.topicos.models.dtos.TopicoRequestDto;
-import com.topicos.topicos.models.dtos.TopicoResponseDto;
-import com.topicos.topicos.models.dtos.UsuarioRequestDto;
-import com.topicos.topicos.models.dtos.UsuarioResponseDto;
+import com.topicos.topicos.models.dtos.cursos.CursoRequestDto;
+import com.topicos.topicos.models.dtos.topicos.TopicoRequestDto;
+import com.topicos.topicos.models.dtos.topicos.TopicoResponseDto;
+import com.topicos.topicos.models.dtos.usuarios.UsuarioRequestDto;
+import com.topicos.topicos.models.dtos.usuarios.UsuarioResponseDto;
 import com.topicos.topicos.models.entities.Topico;
 import com.topicos.topicos.models.payload.ApiResponse;
 import com.topicos.topicos.models.repositories.CursoRepository;
@@ -43,7 +43,7 @@ public class TopicoServiceImpl implements TopicoService {
                 topicoDto.titulo(),
                 topicoDto.mensaje(),
                 topicoDto.fechaCreacion(),
-                topicoDto.status(),
+                true,
                 this.funcionesGenericasService.referenciaPorId(topicoDto.usuarioId(), this.usuarioRepository,
                         "usuario"),
                 this.funcionesGenericasService.referenciaPorId(topicoDto.cursoId(), this.cursoRepository, "curso")));
@@ -55,10 +55,7 @@ public class TopicoServiceImpl implements TopicoService {
     @Transactional(readOnly = true)
     public ApiResponse listarTopicos(Pageable pageable) {
         Page<TopicoResponseDto> listaTopicos = this.topicoRepository.findAllByAndStatusTrue(pageable)
-                .map(t -> new TopicoResponseDto(t.getId(), t.getTitulo(), t.getMensaje(),
-                        new UsuarioRequestDto(t.getId(), t.getUsuario().getNombre(),
-                                t.getUsuario().getEmail(), t.getUsuario().getPassword()),
-                        new CursoRequestDto(t.getId(), t.getCurso().getNombre(), t.getCurso().getCategoria())));
+                .map(t -> new TopicoResponseDto(t));
         if (listaTopicos.isEmpty()) {
             throw new ResourceNotFoundException("Topicos");
         }
@@ -68,14 +65,11 @@ public class TopicoServiceImpl implements TopicoService {
     @Override
     @Transactional(readOnly = true)
     public ApiResponse obtenerTopicoPorId(Long id) {
-        TopicoResponseDto topico = this.topicoRepository
-                .findByIdAndStatusTrue(id).map(t -> new TopicoResponseDto(t.getId(), t.getTitulo(), t.getMensaje(),
-                        new UsuarioRequestDto(t.getId(), t.getUsuario().getNombre(),
-                                t.getUsuario().getEmail(), t.getUsuario().getPassword()),
-                        new CursoRequestDto(t.getId(), t.getCurso().getNombre(), t.getCurso().getCategoria())))
+        TopicoResponseDto response = this.topicoRepository
+                .findByIdAndStatusTrue(id).map(t -> new TopicoResponseDto(t))
                 .orElseThrow(() -> new ResourceNotFoundException("Topicos", "id", id));
 
-        return new ApiResponse("Recurso encontrado correctamente", true, topico);
+        return new ApiResponse("Recurso encontrado correctamente", true, response);
     }
 
     @Override

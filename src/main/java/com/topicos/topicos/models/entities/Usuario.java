@@ -3,7 +3,7 @@ package com.topicos.topicos.models.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.topicos.topicos.models.dtos.UsuarioRequestDto;
+import com.topicos.topicos.models.dtos.usuarios.UsuarioRequestDto;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -2,8 +2,8 @@ package com.topicos.topicos.models.entities;
 
 import java.time.LocalDateTime;
 
-import com.topicos.topicos.models.dtos.TopicoRequestDto;
-import com.topicos.topicos.models.dtos.TopicoResponseDto;
+import com.topicos.topicos.models.dtos.topicos.TopicoRequestDto;
+import com.topicos.topicos.models.dtos.topicos.TopicoResponseDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -53,7 +53,6 @@ public class Topico {
         this.titulo = topicoDto.titulo();
         this.mensaje = topicoDto.mensaje();
         this.fechaCreacion = topicoDto.fechaCreacion();
-        this.status = topicoDto.status();
         this.usuario = topicoDto.usuarioId() != null ? new Usuario() : null;
         this.curso = topicoDto.cursoId() != null ? new Curso() : null;
     }

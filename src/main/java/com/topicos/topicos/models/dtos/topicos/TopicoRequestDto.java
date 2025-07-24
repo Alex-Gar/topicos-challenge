@@ -1,4 +1,4 @@
-package com.topicos.topicos.models.dtos;
+package com.topicos.topicos.models.dtos.topicos;
 
 import java.time.LocalDateTime;
 
@@ -12,7 +12,6 @@ public record TopicoRequestDto(
         @NotBlank String mensaje,
         @NotNull Long usuarioId,
         @NotNull LocalDateTime fechaCreacion,
-        @NotNull Boolean status,
         @NotNull Long cursoId) {
 
     public TopicoRequestDto(Topico topico) {
@@ -20,7 +19,7 @@ public record TopicoRequestDto(
                 topico.getMensaje(),
                 topico.getUsuario() != null ? topico.getUsuario().getId() : null,
                 topico.getFechaCreacion(),
-                topico.isStatus(), topico.getCurso() != null ? topico.getCurso().getId() : null);
+                topico.getCurso() != null ? topico.getCurso().getId() : null);
 
     }
 }

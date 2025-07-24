@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.topicos.topicos.models.dtos.TopicoRequestDto;
+import com.topicos.topicos.models.dtos.topicos.TopicoRequestDto;
 import com.topicos.topicos.models.payload.ApiResponse;
 import com.topicos.topicos.services.TopicoService;
 
