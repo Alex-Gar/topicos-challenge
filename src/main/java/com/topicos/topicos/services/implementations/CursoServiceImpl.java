@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.topicos.topicos.exceptions.ResourceNotFoundException;
+import com.topicos.topicos.models.dtos.cursos.CursoInternalDto;
 import com.topicos.topicos.models.dtos.cursos.CursoRequestDto;
 import com.topicos.topicos.models.dtos.cursos.CursoResponseDto;
 import com.topicos.topicos.models.entities.Curso;
@@ -35,7 +36,7 @@ public class CursoServiceImpl implements CursoService {
     @Override
     @Transactional(readOnly = true)
     public ApiResponse listarCursos(Pageable pageable) {
-        Page<CursoResponseDto> listaCursos = this.cursoRepository.findAll(pageable).map(c -> new CursoResponseDto(c));
+        Page<CursoInternalDto> listaCursos = this.cursoRepository.findAll(pageable).map(c -> new CursoInternalDto(c));
 
         if (listaCursos.isEmpty()) {
             throw new ResourceNotFoundException("Cursos");
@@ -45,7 +46,7 @@ public class CursoServiceImpl implements CursoService {
 
     @Override
     public ApiResponse obtenerCursoPorId(Long id) {
-        CursoResponseDto cursoDto = this.cursoRepository.findById(id).map(c -> new CursoResponseDto(c))
+        CursoInternalDto cursoDto = this.cursoRepository.findById(id).map(c -> new CursoInternalDto(c))
                 .orElseThrow(() -> new ResourceNotFoundException("Curso", "id", id));
 
         return new ApiResponse("Curso buscado correctamente", true, cursoDto);

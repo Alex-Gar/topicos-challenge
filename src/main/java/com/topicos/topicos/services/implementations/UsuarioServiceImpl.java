@@ -32,6 +32,18 @@ public class UsuarioServiceImpl implements UsuarioService {
         return new ApiResponse("Usuario guardado correctamente", true, usuarioCreado);
     }
 
+    // @Override
+    // @Transactional(readOnly = true)
+    // public ApiResponse listarUsuarios(Pageable pageable) {
+    //     Page<UsuarioResponseDto> listaUsuarios = this.usuarioRepository.findAll(pageable)
+    //             .map(usuario -> new UsuarioResponseDto(usuario));
+
+    //     if (listaUsuarios.isEmpty()) {
+    //         throw new ResourceNotFoundException("Usuarios");
+    //     }
+    //     return new ApiResponse("Usuarios listados correctamente", true, listaUsuarios);
+    // }
+
     @Override
     @Transactional(readOnly = true)
     public ApiResponse listarUsuarios(Pageable pageable) {
