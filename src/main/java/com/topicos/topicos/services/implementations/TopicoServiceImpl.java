@@ -54,7 +54,7 @@ public class TopicoServiceImpl implements TopicoService {
     @Override
     @Transactional(readOnly = true)
     public ApiResponse listarTopicos(Pageable pageable) {
-        Page<TopicoResponseDto> listaTopicos = this.topicoRepository.findAll(pageable)
+        Page<TopicoResponseDto> listaTopicos = this.topicoRepository.findAllByAndStatusTrue(pageable)
                 .map(t -> new TopicoResponseDto(t.getId(), t.getTitulo(), t.getMensaje(),
                         new UsuarioRequestDto(t.getId(), t.getUsuario().getNombre(),
                                 t.getUsuario().getEmail(), t.getUsuario().getPassword()),
@@ -69,7 +69,7 @@ public class TopicoServiceImpl implements TopicoService {
     @Transactional(readOnly = true)
     public ApiResponse obtenerTopicoPorId(Long id) {
         TopicoResponseDto topico = this.topicoRepository
-                .findById(id).map(t -> new TopicoResponseDto(t.getId(), t.getTitulo(), t.getMensaje(),
+                .findByIdAndStatusTrue(id).map(t -> new TopicoResponseDto(t.getId(), t.getTitulo(), t.getMensaje(),
                         new UsuarioRequestDto(t.getId(), t.getUsuario().getNombre(),
                                 t.getUsuario().getEmail(), t.getUsuario().getPassword()),
                         new CursoRequestDto(t.getId(), t.getCurso().getNombre(), t.getCurso().getCategoria())))
@@ -81,8 +81,8 @@ public class TopicoServiceImpl implements TopicoService {
     @Override
     @Transactional
     public ApiResponse eliminarTopico(Long id) {
-        this.funcionesGenericasService.existeId(id, this.topicoRepository, "Topico");
-        topicoRepository.deleteById(id);
+        Topico topico = this.funcionesGenericasService.referenciaPorId(id, this.topicoRepository, "Topico");
+        topico.eliminacionLogica();
         return new ApiResponse("Elemento eliminado correctamente.", true, id);
     }
 

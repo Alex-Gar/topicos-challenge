@@ -67,6 +67,10 @@ public class Topico {
         }
     }
 
+    public void eliminacionLogica() {
+        this.status = false;
+    }
+
     public Long getId() {
         return id;
     }
