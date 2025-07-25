@@ -25,6 +25,7 @@ public record UsuarioResponseDto(
                                                                                 u.getId(),
                                                                                 u.getTitulo(),
                                                                                 u.getMensaje(),
+                                                                                u.getFechaCreacion(),
                                                                                 new UsuarioInternalDto(
                                                                                                 u.getUsuario().getId(),
                                                                                                 u.getUsuario().getNombre(),

@@ -1,5 +1,7 @@
 package com.topicos.topicos.services.implementations;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +16,8 @@ import com.topicos.topicos.models.payload.ApiResponse;
 import com.topicos.topicos.models.repositories.CursoRepository;
 import com.topicos.topicos.models.repositories.TopicoRepository;
 import com.topicos.topicos.models.repositories.UsuarioRepository;
+import com.topicos.topicos.models.validations.Validaciones;
+import com.topicos.topicos.models.validations.implementations.ValidarRegistrosDuplicados;
 import com.topicos.topicos.services.FuncionesGenericasService;
 import com.topicos.topicos.services.TopicoService;
 
@@ -31,10 +35,16 @@ public class TopicoServiceImpl implements TopicoService {
 
     @Autowired
     private CursoRepository cursoRepository;
+    
+    @Autowired
+    private List<Validaciones> validaciones;
 
     @Override
     @Transactional
     public ApiResponse guardarTopico(TopicoRequestDto topicoDto) {
+
+        validaciones.forEach(v -> v.validar(topicoDto));
+
         Topico topico = this.topicoRepository.save(new Topico(
                 topicoDto.titulo(),
                 topicoDto.mensaje(),
@@ -48,7 +58,8 @@ public class TopicoServiceImpl implements TopicoService {
     @Override
     @Transactional(readOnly = true)
     public ApiResponse listarTopicos(Pageable pageable) {
-        Page<TopicoResponseDto> listaTopicos = this.topicoRepository.findAllByAndStatusTrue(pageable)
+        Page<TopicoResponseDto> listaTopicos = this.topicoRepository
+                .findAllByStatusTrueOrderByFechaCreacionAsc(pageable)
                 .map(t -> new TopicoResponseDto(t));
         if (listaTopicos.isEmpty()) {
             throw new ResourceNotFoundException("Topicos");

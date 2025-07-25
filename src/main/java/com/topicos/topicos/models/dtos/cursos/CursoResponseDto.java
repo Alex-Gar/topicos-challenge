@@ -24,6 +24,7 @@ public record CursoResponseDto(
                                                                                 c.getId(),
                                                                                 c.getTitulo(),
                                                                                 c.getMensaje(),
+                                                                                c.getFechaCreacion(),
                                                                                 new UsuarioInternalDto(c.getId(), c
                                                                                                 .getUsuario()
                                                                                                 .getNombre(),

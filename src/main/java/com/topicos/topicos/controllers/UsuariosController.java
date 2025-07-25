@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.topicos.topicos.models.dtos.usuarios.UsuarioRequestDto;
-import com.topicos.topicos.models.dtos.usuarios.UsuarioResponseDto;
 import com.topicos.topicos.models.payload.ApiResponse;
 import com.topicos.topicos.services.UsuarioService;
 

@@ -2,6 +2,7 @@ package com.topicos.topicos.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,7 +34,7 @@ public class TopicosController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse> listarTodo(Pageable pageable) {
+    public ResponseEntity<ApiResponse> listarTodo(@PageableDefault(size = 10) Pageable pageable) {
         ApiResponse response = this.topicoService.listarTopicos(pageable);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

@@ -16,4 +16,9 @@ public class GlobalHandlerException {
         return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<ApiResponse> handlerValidationException(ValidationException ex) {
+        ApiResponse response = new ApiResponse(ex.getMessage(), false);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
 }

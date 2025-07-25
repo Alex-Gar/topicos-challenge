@@ -2,6 +2,9 @@ package com.topicos.topicos.models.payload;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiResponse {
 
     private Date hora = new Date();
