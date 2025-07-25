@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.topicos.topicos.exceptions.ResourceNotFoundException;
 import com.topicos.topicos.models.dtos.usuarios.UsuarioIntenal2Dto;
+import com.topicos.topicos.models.dtos.usuarios.UsuarioInternalDto;
 import com.topicos.topicos.models.dtos.usuarios.UsuarioRequestDto;
 import com.topicos.topicos.models.dtos.usuarios.UsuarioResponseDto;
 import com.topicos.topicos.models.entities.Usuario;
@@ -69,7 +70,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         funcionGenericaService.existeId(id, this.usuarioRepository, "Usuario");
         Usuario usuario = funcionGenericaService.referenciaPorId(id, this.usuarioRepository, "usuario");
         usuario.actualizarDatos(usuarioDto);
-        UsuarioResponseDto usuarioDtoActualizado = new UsuarioResponseDto(usuario);
+        UsuarioInternalDto usuarioDtoActualizado = new UsuarioInternalDto(usuario);
 
         return new ApiResponse("Usuario actualizado correctamente", true, usuarioDtoActualizado);
     }

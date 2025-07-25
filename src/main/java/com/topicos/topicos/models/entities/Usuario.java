@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.topicos.topicos.models.dtos.usuarios.UsuarioRequestDto;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,7 +27,7 @@ public class Usuario {
 
     private String password;
 
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Topico> topicos = new ArrayList<>();
 
     public Usuario() {

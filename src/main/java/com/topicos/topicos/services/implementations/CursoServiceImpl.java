@@ -65,7 +65,7 @@ public class CursoServiceImpl implements CursoService {
         Curso curso = this.funcionGenericaService.referenciaPorId(id, this.cursoRepository, "Curso");
         curso.actualizarCurso(cursoDto);
 
-        CursoResponseDto cursoActualizado = new CursoResponseDto(curso);
+        CursoRequestDto cursoActualizado = new CursoRequestDto(curso);
         return new ApiResponse("Curso actualizado correctamente", true, cursoActualizado);
     }
 

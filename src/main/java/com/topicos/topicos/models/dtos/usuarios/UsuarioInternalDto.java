@@ -7,7 +7,7 @@ public record UsuarioInternalDto(
         String nombre,
         String email) {
 
-    UsuarioInternalDto(Usuario usuario) {
+    public UsuarioInternalDto(Usuario usuario) {
         this(
                 usuario.getId(),
                 usuario.getNombre(),

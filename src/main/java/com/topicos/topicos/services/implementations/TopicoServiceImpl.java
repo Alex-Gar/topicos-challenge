@@ -1,18 +1,14 @@
 package com.topicos.topicos.services.implementations;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.topicos.topicos.exceptions.ResourceNotFoundException;
-import com.topicos.topicos.models.dtos.cursos.CursoRequestDto;
 import com.topicos.topicos.models.dtos.topicos.TopicoRequestDto;
 import com.topicos.topicos.models.dtos.topicos.TopicoResponseDto;
-import com.topicos.topicos.models.dtos.usuarios.UsuarioRequestDto;
-import com.topicos.topicos.models.dtos.usuarios.UsuarioResponseDto;
 import com.topicos.topicos.models.entities.Topico;
 import com.topicos.topicos.models.payload.ApiResponse;
 import com.topicos.topicos.models.repositories.CursoRepository;
@@ -42,8 +38,6 @@ public class TopicoServiceImpl implements TopicoService {
         Topico topico = this.topicoRepository.save(new Topico(
                 topicoDto.titulo(),
                 topicoDto.mensaje(),
-                topicoDto.fechaCreacion(),
-                true,
                 this.funcionesGenericasService.referenciaPorId(topicoDto.usuarioId(), this.usuarioRepository,
                         "usuario"),
                 this.funcionesGenericasService.referenciaPorId(topicoDto.cursoId(), this.cursoRepository, "curso")));
@@ -86,7 +80,7 @@ public class TopicoServiceImpl implements TopicoService {
         Topico topico = this.funcionesGenericasService.referenciaPorId(id, this.topicoRepository, "Topico");
         topico.validaciones(topicoDto);
 
-        TopicoResponseDto topicoResponse = new TopicoResponseDto(topico);
+        TopicoRequestDto topicoResponse = new TopicoRequestDto(topico);
         return new ApiResponse("Elemento actualizado correctamente", true, topicoResponse);
     }
 

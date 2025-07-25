@@ -3,9 +3,7 @@ package com.topicos.topicos.models.entities;
 import java.time.LocalDateTime;
 
 import com.topicos.topicos.models.dtos.topicos.TopicoRequestDto;
-import com.topicos.topicos.models.dtos.topicos.TopicoResponseDto;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -39,22 +37,13 @@ public class Topico {
     public Topico() {
     }
 
-    public Topico(String titulo, String mensaje, LocalDateTime fechaCreacion, Boolean status, Usuario usuario,
-            Curso curso) {
+    public Topico(String titulo, String mensaje, Usuario usuario, Curso curso) {
         this.titulo = titulo;
         this.mensaje = mensaje;
-        this.fechaCreacion = fechaCreacion;
-        this.status = status;
+        this.status = true;
+        this.fechaCreacion = LocalDateTime.now();
         this.usuario = usuario;
         this.curso = curso;
-    }
-
-    public Topico(TopicoRequestDto topicoDto) {
-        this.titulo = topicoDto.titulo();
-        this.mensaje = topicoDto.mensaje();
-        this.fechaCreacion = topicoDto.fechaCreacion();
-        this.usuario = topicoDto.usuarioId() != null ? new Usuario() : null;
-        this.curso = topicoDto.cursoId() != null ? new Curso() : null;
     }
 
     public void validaciones(TopicoRequestDto topico) {

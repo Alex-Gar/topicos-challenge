@@ -46,7 +46,7 @@ public class Curso {
     }
 
     public void actualizarCurso(CursoRequestDto cursoDto) {
-        if(cursoDto.nombre() != null){
+        if (cursoDto.nombre() != null) {
             this.nombre = cursoDto.nombre();
         }
     }
