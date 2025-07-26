@@ -18,8 +18,10 @@ import com.topicos.topicos.models.dtos.topicos.TopicoRequestDto;
 import com.topicos.topicos.models.payload.ApiResponse;
 import com.topicos.topicos.services.TopicoService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 
+@SecurityRequirement(name = "bearer-key")
 @RestController
 @RequestMapping("topicos")
 public class TopicosController {
