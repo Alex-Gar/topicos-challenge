@@ -1,7 +1,12 @@
 package com.topicos.topicos.models.entities;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.topicos.topicos.models.dtos.usuarios.UsuarioRequestDto;
 
@@ -15,7 +20,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "usuario")
-public class Usuario {
+public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,6 +36,11 @@ public class Usuario {
     private List<Topico> topicos = new ArrayList<>();
 
     public Usuario() {
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     public Usuario(UsuarioRequestDto usuarioDto) {
@@ -64,12 +74,38 @@ public class Usuario {
         return email;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
 
     public List<Topico> getTopicos() {
         return topicos;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
 }

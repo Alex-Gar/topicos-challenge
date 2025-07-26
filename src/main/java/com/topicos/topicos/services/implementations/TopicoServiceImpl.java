@@ -17,7 +17,6 @@ import com.topicos.topicos.models.repositories.CursoRepository;
 import com.topicos.topicos.models.repositories.TopicoRepository;
 import com.topicos.topicos.models.repositories.UsuarioRepository;
 import com.topicos.topicos.models.validations.Validaciones;
-import com.topicos.topicos.models.validations.implementations.ValidarRegistrosDuplicados;
 import com.topicos.topicos.services.FuncionesGenericasService;
 import com.topicos.topicos.services.TopicoService;
 
@@ -42,7 +41,6 @@ public class TopicoServiceImpl implements TopicoService {
     @Override
     @Transactional
     public ApiResponse guardarTopico(TopicoRequestDto topicoDto) {
-
         validaciones.forEach(v -> v.validar(topicoDto));
 
         Topico topico = this.topicoRepository.save(new Topico(
